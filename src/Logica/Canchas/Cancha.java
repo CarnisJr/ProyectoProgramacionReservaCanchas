@@ -1,22 +1,23 @@
 package Logica.Canchas;
 
+import Logica.Usuarios.ColaReservas;
 import Logica.Usuarios.Usuario;
 
 public class Cancha {
     private String tipoCancha;
     private int codigo;
     private String campus;
-    private Usuario usuario;
+    private ColaReservas colaReservas;
     private boolean estadoCancha;
     private boolean isBooked;
 
-    public Cancha(String campus, int codigo, String tipoCancha, boolean estadoCancha, boolean isBooked, Usuario usuario) {
+    public Cancha(String campus, int codigo, String tipoCancha, boolean estadoCancha, boolean isBooked, ColaReservas colaReservas) {
         this.tipoCancha = tipoCancha;
         this.codigo = codigo;
         this.campus = campus;
         this.estadoCancha = estadoCancha;
         this.isBooked = isBooked;
-        this.usuario = usuario;
+        this.colaReservas = colaReservas;
     }
 
     public String getCampus() {
@@ -43,12 +44,12 @@ public class Cancha {
         this.tipoCancha = tipoCancha;
     }
 
-    public Usuario getUsuario() {
-        return usuario;
+    public ColaReservas getCola() {
+        return colaReservas;
     }
 
-    public void setUsuario(Usuario usuario) {
-        this.usuario = usuario;
+    public void setCola(ColaReservas colaReservas) {
+        this.colaReservas = colaReservas;
     }
 
     public boolean isEstadoCancha() {

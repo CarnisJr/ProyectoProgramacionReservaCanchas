@@ -1,5 +1,6 @@
 package Logica.Canchas;
 
+import Logica.Usuarios.ColaReservas;
 import Logica.Usuarios.Usuario;
 
 import javax.swing.*;
@@ -22,14 +23,18 @@ public class GestionCanchas {
         canchasMap.put("UdlaArena", canchasA);
     }
 
+    public HashMap<String, ArrayList<Cancha>> getCanchasMap() {
+        return canchasMap;
+    }
+
     public void establecerCanchas(){
-        canchasUP.add(new Cancha("UdlaPark", 1, "Futbol", true, false, new Usuario()));
-        canchasG.add(new Cancha("UdlaGranados",2, "Futbol", true, false, new Usuario()));
-        canchasG.add(new Cancha("UdlaGranados", 3, "Basquetball", true, false, new Usuario()));
-        canchasA.add(new Cancha("UdlaArena", 4, "Futbol", true, false, new Usuario()));
-        canchasA.add(new Cancha("UdlaArena",5, "Futbol", true, false, new Usuario()));
-        canchasA.add(new Cancha("UdlaArena",6, "Volleyball", true, false, new Usuario()));
-        canchasA.add(new Cancha("UdlaArena",7, "Basquetball", true, false, new Usuario()));
+        canchasUP.add(new Cancha("UdlaPark", 1, "Futbol", true, false, new ColaReservas()));
+        canchasG.add(new Cancha("UdlaGranados",2, "Futbol", true, false, new ColaReservas()));
+        canchasG.add(new Cancha("UdlaGranados", 3, "Basquetball", true, false, new ColaReservas()));
+        canchasA.add(new Cancha("UdlaArena", 4, "Futbol", true, false, new ColaReservas()));
+        canchasA.add(new Cancha("UdlaArena",5, "Futbol", true, false, new ColaReservas()));
+        canchasA.add(new Cancha("UdlaArena",6, "Volleyball", true, false, new ColaReservas()));
+        canchasA.add(new Cancha("UdlaArena",7, "Basquetball", true, false, new ColaReservas()));
     }
 
     public void mostrarCanchas(String campus, JTable table){
@@ -37,12 +42,18 @@ public class GestionCanchas {
         model.addRow(new Object[]{"Campus", "Código", "Tipo de cancha", "Estado", "Reserva", "Estudiante"});
         if(canchasMap.containsKey(campus)){
             for(Cancha aux : canchasMap.get(campus)){
-                model.addRow(new Object[]{aux.getCampus(), aux.getCodigo(), aux.getTipoCancha(), aux.isEstadoCancha(), aux.isBooked(), aux.getUsuario().getCorreoInstitucional()});
+                if(aux.getCola().getNodoInicio() == null)
+                    model.addRow(new Object[]{aux.getCampus(), aux.getCodigo(), aux.getTipoCancha(), aux.isEstadoCancha(), aux.isBooked(), "No hay nadie a la cola"});
+                else
+                    model.addRow(new Object[]{aux.getCampus(), aux.getCodigo(), aux.getTipoCancha(), aux.isEstadoCancha(), aux.isBooked(), aux.getCola().getNodoInicio().getUsuario().getCorreoInstitucional()});
             }
         }else{
             for(ArrayList<Cancha> aux : canchasMap.values()){
                 for (Cancha cancha : aux) {
-                    model.addRow(new Object[]{cancha.getCampus(), cancha.getCodigo(), cancha.getTipoCancha(), cancha.isEstadoCancha(), cancha.isBooked(), cancha.getUsuario().getCorreoInstitucional()});
+                    if(cancha.getCola().getNodoInicio() == null)
+                        model.addRow(new Object[]{cancha.getCampus(), cancha.getCodigo(), cancha.getTipoCancha(), cancha.isEstadoCancha(), cancha.isBooked(), "No hay nadie a la cola"});
+                    else
+                        model.addRow(new Object[]{cancha.getCampus(), cancha.getCodigo(), cancha.getTipoCancha(), cancha.isEstadoCancha(), cancha.isBooked(), cancha.getCola().getNodoInicio().getUsuario().getCorreoInstitucional()});
                 }
             }
         }

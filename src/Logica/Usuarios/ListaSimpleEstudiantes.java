@@ -7,7 +7,7 @@ import javax.swing.table.DefaultTableModel;
 
 public class ListaSimpleEstudiantes {
 
-    private Nodo inicio;
+    private NodoListaSimple inicio;
 
     public ListaSimpleEstudiantes() {
         this.inicio = null;
@@ -18,12 +18,12 @@ public class ListaSimpleEstudiantes {
     }
 
     public void agreagarEstudiante(Usuario estudiante){
-        Nodo nuevoNodo = new Nodo(estudiante, null);
+        NodoListaSimple nuevoNodo = new NodoListaSimple(estudiante, null);
 
         if(isEmpty())
             this.inicio = nuevoNodo;
         else{
-            Nodo aux = this.inicio;
+            NodoListaSimple aux = this.inicio;
             while(aux.getProximo() != null){
                 aux = aux.getProximo();
             }
@@ -32,7 +32,7 @@ public class ListaSimpleEstudiantes {
     }
 
     public boolean buscarEstudiante(String cedula, JTextArea textArea){
-        Nodo aux = this.inicio;
+        NodoListaSimple aux = this.inicio;
 
         while(aux != null){
             if(aux.getUsuario().getCedula().equals(cedula)){
@@ -57,7 +57,7 @@ public class ListaSimpleEstudiantes {
 
     public void mostrarElementos(JTable table){
 
-        Nodo aux = this.inicio;
+        NodoListaSimple aux = this.inicio;
         DefaultTableModel model = new DefaultTableModel(new Object[]{"Nombre", "Cédula", "Correo Institucional"}, 0);
         model.addRow(new Object[]{"Nombre", "Cédula", "Correo Institucional"});
 
