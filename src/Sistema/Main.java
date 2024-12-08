@@ -2,15 +2,15 @@ package Sistema;
 
 import GUI.LogInScreen;
 import GUI.AdminSide;
-import Logica.LogIn;
-import Logica.Usuario;
+import Logica.Usuarios.LogIn;
+import Logica.Usuarios.Usuario;
 
 import javax.swing.*;
 
 public class Main {
     private static LogInScreen logInScreen = null;
     public static Usuario usuarioLogged;
-    public static LogIn logIn = new Logica.LogIn();
+    public static LogIn logIn = new LogIn();
 
     public static void main(String[] args) {
 

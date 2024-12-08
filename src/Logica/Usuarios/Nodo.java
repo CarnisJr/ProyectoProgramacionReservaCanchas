@@ -1,4 +1,4 @@
-package Logica;
+package Logica.Usuarios;
 
 public class Nodo {
     private Usuario usuario;

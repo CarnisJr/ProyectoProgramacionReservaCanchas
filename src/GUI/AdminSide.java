@@ -1,7 +1,8 @@
 package GUI;
 
-import Logica.ListaSimpleEstudiantes;
-import Logica.Usuario;
+import Logica.Canchas.GestionCanchas;
+import Logica.Usuarios.ListaSimpleEstudiantes;
+import Logica.Usuarios.Usuario;
 import Sistema.Main;
 
 import javax.swing.*;
@@ -20,7 +21,12 @@ public class AdminSide extends JFrame {
     private JButton eleminarEstudianteButton;
     private JButton mostrarEstudiantesButton;
     private JTable tablaEstudiantes;
+    private JPanel gestionarCanchas;
+    private JTable tableCanchas;
+    private JButton mostrarCanchasButton;
+    private JComboBox campusComboBox;
     private ListaSimpleEstudiantes listaSimpleEstudiantes = new ListaSimpleEstudiantes();
+    private GestionCanchas gestionCanchas = new GestionCanchas();
 
     public AdminSide() {
         add(mainFrame);
@@ -31,6 +37,25 @@ public class AdminSide extends JFrame {
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         hashMapValuesToList(listaSimpleEstudiantes);
 
+        gestionDeEstudiantes();
+
+        mostrarCanchasButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                gestionCanchas.mostrarCanchas(campusComboBox.getSelectedItem().toString(), tableCanchas);
+            }
+        });
+    }
+
+    public void hashMapValuesToList(ListaSimpleEstudiantes listaSimpleEstudiantes){
+        for(Usuario usr : Main.logIn.getUsuarios().values()) {
+            if(!usr.isAdmin()){
+                listaSimpleEstudiantes.agreagarEstudiante(usr);
+            }
+        }
+    }
+
+    public void gestionDeEstudiantes(){
         agregarEstudiantesButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -67,13 +92,5 @@ public class AdminSide extends JFrame {
                 listaSimpleEstudiantes.mostrarElementos(tablaEstudiantes);
             }
         });
-    }
-
-    public void hashMapValuesToList(ListaSimpleEstudiantes listaSimpleEstudiantes){
-        for(Usuario usr : Main.logIn.getUsuarios().values()) {
-            if(!usr.isAdmin()){
-                listaSimpleEstudiantes.agreagarEstudiante(usr);
-            }
-        }
     }
 }

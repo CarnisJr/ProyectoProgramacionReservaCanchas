@@ -1,4 +1,4 @@
-package Logica;
+package Logica.Usuarios;
 
 import java.util.Random;
 
@@ -16,6 +16,8 @@ public class Usuario {
         this.cedula = cedula;
         this.isAdmin = isAdmin;
     }
+
+    public Usuario() {}
 
     public Usuario(String nombre, String cedula, boolean isAdmin) {
         this.nombre = nombre;

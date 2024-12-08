@@ -1,4 +1,4 @@
-package Logica;
+package Logica.Usuarios;
 
 import java.util.HashMap;
 
