@@ -7,7 +7,6 @@ import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
 
 public class GestionCanchas {
     private ArrayList<Cancha> canchasUP = new ArrayList<>();

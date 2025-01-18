@@ -32,10 +32,17 @@ public class AdminSide extends JFrame {
     private JButton reservarButton;
     private JButton mostrarColaButton;
     private JButton eliminarDeColaButton;
-    private JTextArea pruebaTextArea;
+    private JTextArea mostrarColaDeReservasCanchas;
     private ListaSimpleEstudiantes listaSimpleEstudiantes = new ListaSimpleEstudiantes();
     private GestionCanchas gestionCanchas = new GestionCanchas();
-    private ColaReservas colaReservas = new ColaReservas();
+
+    public GestionCanchas getGestionCanchas() {
+        return this.gestionCanchas;
+    }
+
+    public void setGestionCanchas(GestionCanchas gestionCanchas) {
+        this.gestionCanchas = gestionCanchas;
+    }
 
     public AdminSide() {
         add(mainFrame);
@@ -47,6 +54,10 @@ public class AdminSide extends JFrame {
         hashMapValuesToList(listaSimpleEstudiantes);
 
         gestionDeEstudiantes();
+        gestionarCanchas();
+    }
+
+    public void gestionarCanchas() {
 
         mostrarCanchasButton.addActionListener(new ActionListener() {
             @Override
@@ -59,20 +70,39 @@ public class AdminSide extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 seleccionarCanchaAReservar();
-                /*Main.logIn.getUsuarios().get(cedulaAgregarUsr.getText())*/
             }
         });
         mostrarColaButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                pruebaTextArea.setText(colaReservas.mostrarCola());
+                ArrayList<Cancha> aux = gestionCanchas.getCanchasMap().get(campusComboBox.getSelectedItem().toString());
+                for(Cancha c : aux) {
+                    if(Integer.toString(c.getCodigo()).equals(codigoReservaTxt.getText())) {
+                        if(c.getCola().isEmpty()) {
+                            JOptionPane.showMessageDialog(null, "No hay nadie en la cola");
+                        }
+                        mostrarColaDeReservasCanchas.setText(c.getCola().mostrarCola());
+                        break;
+                    }
+                    mostrarColaDeReservasCanchas.setText("No hay reservas");
+                }
             }
         });
 
         eliminarDeColaButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                colaReservas.desencolarUsuario();
+                ArrayList<Cancha> aux = gestionCanchas.getCanchasMap().get(campusComboBox.getSelectedItem().toString());
+                for(Cancha c : aux) {
+                    if(Integer.toString(c.getCodigo()).equals(codigoReservaTxt.getText())) {
+                        c.getCola().desencolarUsuario();
+                        if(c.getCola().isEmpty())
+                            c.setBooked(false);
+                        mostrarColaDeReservasCanchas.setText(c.getCola().mostrarCola());
+                        break;
+                    }
+                    mostrarColaDeReservasCanchas.setText("No hay reservas");
+                }
             }
         });
     }
@@ -83,10 +113,10 @@ public class AdminSide extends JFrame {
             for(Cancha c : aux) {
                 if(Integer.toString(c.getCodigo()).equals(codigoReservaTxt.getText())) {
                     String cedulaParaReserva = JOptionPane.showInputDialog(null, "Ingrese la cédula del estudiante");
-                    if(Main.logIn.getUsuarios().containsKey(cedulaParaReserva)) {
+                    if(Main.logIn.getUsuarios().containsKey(cedulaParaReserva) && !Main.logIn.getUsuarios().get(cedulaParaReserva).isAdmin()) {
                         c.getCola().agregarUsuario(Main.logIn.getUsuarios().get(cedulaParaReserva));
-                        pruebaTextArea.setText(c.getCola().mostrarCola());
                         c.setBooked(true);
+                        JOptionPane.showMessageDialog(null, "Se realizó la reserva exitosamente");
                     }else JOptionPane.showMessageDialog(null, "No existe ese Estudiante");
                     break;
                 }

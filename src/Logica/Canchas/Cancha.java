@@ -1,7 +1,6 @@
 package Logica.Canchas;
 
 import Logica.Usuarios.ColaReservas;
-import Logica.Usuarios.Usuario;
 
 public class Cancha {
     private String tipoCancha;
